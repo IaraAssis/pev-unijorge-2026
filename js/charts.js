@@ -285,6 +285,27 @@
   // ============================================================
   // Section 05 — IMC × Escore
   // ============================================================
+  // O eixo linear do scatter se estica pro maior IMC da amostra — se um
+  // único valor fica bem afastado do resto, a nuvem de pontos "encolhe"
+  // visualmente pra esquerda. Detecta esse tipo de gap (em vez de deixar o
+  // vazio sem explicação) e descreve em texto.
+  function describeImcSpread(withImc) {
+    const sorted = [...withImc.map((d) => d.imc)].sort((a, b) => a - b);
+    if (sorted.length < 4) return "";
+    let maxGap = 0, gapIndex = -1;
+    for (let i = 1; i < sorted.length; i++) {
+      const gap = sorted[i] - sorted[i - 1];
+      if (gap > maxGap) { maxGap = gap; gapIndex = i; }
+    }
+    // Só vale a pena explicar quando o maior "salto" está perto do topo da
+    // amostra (os isolados são poucos) e é bem maior que o passo típico.
+    const isolados = sorted.length - gapIndex;
+    if (maxGap < 3 || isolados > 3) return "";
+    const clusterMax = sorted[gapIndex - 1];
+    const valores = sorted.slice(gapIndex).map((v) => v.toFixed(1)).join(", ");
+    return `${gapIndex} de ${sorted.length} registros têm IMC até ${clusterMax.toFixed(1)} kg/m² — ${isolados === 1 ? `o ponto isolado (${valores})` : `os pontos isolados (${valores})`} ${isolados === 1 ? "puxa" : "puxam"} o eixo pra direita, então a nuvem de pontos parece mais concentrada na metade esquerda do gráfico.`;
+  }
+
   function renderImcStats() {
     const withImc = data.filter((d) => notNull(d.imc));
     const imcMedio = mean(withImc.map((d) => d.imc));
@@ -303,6 +324,8 @@
         <div class="stat-value">${t.value}</div>
       </div>
     `).join("");
+
+    $("insightImc").textContent = describeImcSpread(withImc);
   }
 
   function renderImc(t) {
