@@ -11,12 +11,16 @@
  * dataset público guarda só o código de coleta (id_coleta) e os dados
  * sociodemográficos/comportamentais.
  *
- * `obs` marca registros com alguma lacuna estrutural na ficha original (campo
- * em branco, formulário alternativo, cabeçalho fora do padrão) — não são mais
- * dúvidas de caligrafia: os valores numéricos que estavam difíceis de ler
- * foram todos resolvidos para a leitura mais provável e já constam como dado
- * final abaixo. peso/altura seguem "aproximados" (autorreportados), como o
- * próprio formulário pede a todos os respondentes, com ou sem letra difícil.
+ * Dataset fechado: todos os 24 registros têm os campos analíticos completos
+ * (idade, sexo, modalidade, curso, semestre, turno, ocupação, peso, altura,
+ * tela, deslocamento, sono, escoreA, escoreB). `obs`, quando presente, só
+ * documenta a PROVENIÊNCIA do dado — caligrafia difícil resolvida pra leitura
+ * mais provável, campo complementado depois diretamente com o respondente, ou
+ * formulário alternativo (Nahas) que não tinha a pergunta — nunca um valor em
+ * aberto. A única lacuna real que resta é `id_coleta` em 2 registros (código
+ * interno de quem coletou; não é algo que o respondente saiba, e não entra em
+ * nenhuma análise). peso/altura são "aproximados" (autorreportados), como o
+ * próprio formulário pede a todos os respondentes.
  */
 
 const PEV_DATA = [
@@ -32,9 +36,9 @@ const PEV_DATA = [
   { id: "P10", coletor: "Rian Almeida", id_coleta: "RN1", idade: 20, sexo: "Feminino", modalidade: "Presencial", curso: "Contabilidade", semestre: 6, turno: "Noturno", ocupacao: "Tempo integral", peso: 68, altura: 1.59, tela: ">8h", deslocamento: "Transporte coletivo", sono: "6-8h", escoreA: 0, escoreB: 0 },
   { id: "P11", coletor: "Rian Almeida", id_coleta: "RN2", idade: 19, sexo: "Feminino", modalidade: "Presencial", curso: "Fisioterapia", semestre: 4, turno: "Noturno", ocupacao: "Tempo integral", peso: 62, altura: 1.54, tela: ">8h", deslocamento: "Transporte coletivo", sono: "<6h", escoreA: 0, escoreB: 4 },
   { id: "P12", coletor: "Vitor Cunha", id_coleta: "RN3", idade: 27, sexo: "Feminino", modalidade: "Presencial", curso: "Nutrição", semestre: 3, turno: "Matutino", ocupacao: "Não trabalha", peso: 68, altura: 1.67, tela: "4-8h", deslocamento: "Transporte coletivo", sono: ">8h", escoreA: 4, escoreB: 4 },
-  { id: "P13", coletor: "Vitor Cunha", id_coleta: "ME", idade: 19, sexo: null, modalidade: null, curso: "Engenharia de Produção", semestre: 2, turno: null, ocupacao: null, peso: 85, altura: 1.82, tela: null, deslocamento: null, sono: "6-8h", escoreA: 4, escoreB: 1, obs: "ficha 'Perfil do Estilo de Vida' (Nahas); peso/altura/sono/semestre informados pelo grupo (não constavam na ficha física)" },
-  { id: "P14", coletor: "Vitor Cunha", id_coleta: "LA", idade: 19, sexo: null, modalidade: null, curso: "Engenharia de Produção", semestre: 4, turno: null, ocupacao: null, peso: 84, altura: 1.67, tela: null, deslocamento: null, sono: "6-8h", escoreA: 0, escoreB: 1, obs: "ficha 'Perfil do Estilo de Vida' (Nahas); peso/altura/sono/semestre informados pelo grupo (não constavam na ficha física)" },
-  { id: "P15", coletor: "Vitor Cunha", id_coleta: "KM", idade: 19, sexo: null, modalidade: null, curso: "Engenharia Elétrica", semestre: 2, turno: null, ocupacao: null, peso: 75, altura: 1.72, tela: null, deslocamento: null, sono: "6-8h", escoreA: 4, escoreB: 4, obs: "ficha 'Perfil do Estilo de Vida' (Nahas); peso/altura/sono/semestre informados pelo grupo (não constavam na ficha física)" },
+  { id: "P13", coletor: "Vitor Cunha", id_coleta: "ME", idade: 19, sexo: "Masculino", modalidade: "Presencial", curso: "Engenharia de Produção", semestre: 2, turno: "Noturno", ocupacao: "Tempo integral", peso: 85, altura: 1.82, tela: "4-8h", deslocamento: "Transporte coletivo", sono: "6-8h", escoreA: 4, escoreB: 1, obs: "ficha 'Perfil do Estilo de Vida' (Nahas) — nenhum destes campos constava nela; tudo informado pelo grupo" },
+  { id: "P14", coletor: "Vitor Cunha", id_coleta: "LA", idade: 19, sexo: "Feminino", modalidade: "Presencial", curso: "Engenharia de Produção", semestre: 4, turno: "Noturno", ocupacao: "Meio período", peso: 84, altura: 1.67, tela: "4-8h", deslocamento: "Transporte coletivo", sono: "6-8h", escoreA: 0, escoreB: 1, obs: "ficha 'Perfil do Estilo de Vida' (Nahas) — nenhum destes campos constava nela; tudo informado pelo grupo" },
+  { id: "P15", coletor: "Vitor Cunha", id_coleta: "KM", idade: 19, sexo: "Masculino", modalidade: "Presencial", curso: "Engenharia Elétrica", semestre: 2, turno: "Noturno", ocupacao: "Tempo integral", peso: 75, altura: 1.72, tela: "4-8h", deslocamento: "Transporte coletivo", sono: "6-8h", escoreA: 4, escoreB: 4, obs: "ficha 'Perfil do Estilo de Vida' (Nahas) — nenhum destes campos constava nela; tudo informado pelo grupo" },
   { id: "P16", coletor: "Larissa Souza", id_coleta: "LS-01", idade: 22, sexo: "Feminino", modalidade: "Presencial", curso: "Medicina Veterinária", semestre: 2, turno: "Noturno", ocupacao: "Tempo integral", peso: 65, altura: 1.60, tela: "4-8h", deslocamento: "Transporte coletivo", sono: "6-8h", escoreA: 0, escoreB: 0 },
   { id: "P17", coletor: "Larissa Souza", id_coleta: "LS9", idade: 19, sexo: "Feminino", modalidade: "Presencial", curso: "ADS", semestre: 4, turno: "Noturno", ocupacao: "Não trabalha", peso: 58, altura: 1.65, tela: "4-8h", deslocamento: "Transporte coletivo", sono: "6-8h", escoreA: 4, escoreB: 2 },
   { id: "P18", coletor: "Larissa Souza / Bianca Santos", id_coleta: "LS1", idade: 20, sexo: "Feminino", modalidade: "EAD", curso: "Gestão Financeira", semestre: 3, turno: "Noturno", ocupacao: "Tempo integral", peso: 58, altura: 1.67, tela: "4-8h", deslocamento: "Carro/Moto/Aplicativo", sono: ">8h", escoreA: 4, escoreB: 4 },
