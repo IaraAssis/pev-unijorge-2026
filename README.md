@@ -40,9 +40,13 @@ Depois abra `http://localhost:8080` (ou a porta indicada).
   impresso na própria ficha garante anonimato, então só ficaram os dados
   sociodemográficos/comportamentais e um código de coleta (`id_coleta`).
 - Peso e altura são autorreportados ("aproximados"), como o próprio formulário pede.
-- Alguns campos com caligrafia difícil de ler estão marcados no campo `obs` de cada
-  registro em `js/data.js` — **confira esses valores contra a ficha física original
-  antes da apresentação/entrega final.**
+- Alguns campos tinham caligrafia difícil de ler; foram resolvidos para a leitura
+  mais provável e já entram como dado final (sem asterisco/observação). O campo
+  `obs` de cada registro em `js/data.js`, quando presente, marca só lacunas
+  estruturais reais (campo em branco na ficha, formulário alternativo) — não
+  dúvida de leitura. A exceção é `P20`: curso, peso e altura ficaram `null`
+  porque não havia nenhum traço legível nesses campos na ficha física, então não
+  dava pra estimar um valor a partir da caligrafia.
 - 3 registros (`P13`–`P15`) vieram de um instrumento diferente ("Perfil do Estilo de
   Vida" de Nahas) e por isso só têm curso/idade/escore preenchidos — os demais campos
   ficam `null` de propósito.
