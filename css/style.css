@@ -230,6 +230,18 @@ p.body-text {
   margin-bottom: 12px;
 }
 
+.chart-sub.insight {
+  margin-top: 12px;
+  margin-bottom: 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.chart-sub.insight strong { color: var(--text-primary); }
+
 .chart-card canvas { max-height: 300px; }
 
 .legend-row {

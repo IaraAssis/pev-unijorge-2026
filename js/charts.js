@@ -25,6 +25,27 @@
   const notNull = (v) => v !== null && v !== undefined;
   const mean = (arr) => (arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length : null);
 
+  // Correlação de Pearson (r) entre dois vetores numéricos pareados.
+  function pearson(xs, ys) {
+    const n = xs.length;
+    if (n < 3) return null;
+    const mx = mean(xs), my = mean(ys);
+    let num = 0, dx2 = 0, dy2 = 0;
+    for (let i = 0; i < n; i++) {
+      const dx = xs[i] - mx, dy = ys[i] - my;
+      num += dx * dy; dx2 += dx * dx; dy2 += dy * dy;
+    }
+    const denom = Math.sqrt(dx2 * dy2);
+    return denom === 0 ? null : num / denom;
+  }
+
+  function correlationStrength(r) {
+    const abs = Math.abs(r);
+    const strength = abs < 0.1 ? "praticamente nula" : abs < 0.3 ? "fraca" : abs < 0.5 ? "moderada" : abs < 0.7 ? "forte" : "muito forte";
+    const direction = r < 0 ? "negativa" : "positiva";
+    return abs < 0.1 ? strength : `${direction}, ${strength}`;
+  }
+
   function countByOrder(rows, keyFn, order, fallbackLabel) {
     const counts = new Map(order.map((k) => [k, 0]));
     let missing = 0;
@@ -215,8 +236,31 @@
   // ============================================================
   // Section 04 — Cruzamentos (% suficientemente ativo por subgrupo)
   // ============================================================
-  function renderCrossBar(canvasId, keyFn, order, t) {
+  // Traduz a tabela de % por subgrupo numa frase de "probabilidade" —
+  // a leitura que uma plateia consegue captar de cabeça, com o n exposto
+  // pra não esconder que são amostras pequenas.
+  function describeCross(rows) {
+    if (rows.length === 0) return "Sem dados suficientes nesse grupo.";
+    // Prioriza comparar subgrupos com n >= 3 — um extremo de 100%/0% baseado
+    // em 1 única pessoa não é uma leitura confiável pra apresentar como achado.
+    const reliable = rows.filter((r) => r.n >= 3);
+    const pool = reliable.length >= 2 ? reliable : rows;
+    if (pool.length === 1) {
+      const r = pool[0];
+      return `${r.cat}: ${r.pct}% suficientemente ativos (n=${r.n}) — só um subgrupo com dado confiável, sem comparação possível.`;
+    }
+    const sorted = [...pool].sort((a, b) => b.pct - a.pct);
+    const high = sorted[0];
+    const low = sorted[sorted.length - 1];
+    if (high.pct === low.pct) {
+      return `Nenhuma diferença relevante entre os grupos — todos em torno de ${high.pct}% suficientemente ativos.`;
+    }
+    return `Maior chance: "${high.cat}" — ${high.pct}% suficientemente ativos (n=${high.n}). Menor chance: "${low.cat}" — ${low.pct}% (n=${low.n}).`;
+  }
+
+  function renderCrossBar(canvasId, insightId, keyFn, order, t) {
     const rows = pctActiveByGroup(data, keyFn, order);
+    if (insightId) $(insightId).textContent = describeCross(rows);
     return new Chart($(canvasId), {
       type: "bar",
       data: {
@@ -241,6 +285,26 @@
   // ============================================================
   // Section 05 — IMC × Escore
   // ============================================================
+  function renderImcStats() {
+    const withImc = data.filter((d) => notNull(d.imc));
+    const imcMedio = mean(withImc.map((d) => d.imc));
+    const acimaDoPeso = withImc.filter((d) => d.imcCategoria === "Sobrepeso" || d.imcCategoria === "Obesidade");
+    const r = pearson(withImc.map((d) => d.imc), withImc.map((d) => d.escoreTotal));
+
+    const tiles = [
+      { label: "IMC médio da amostra", value: imcMedio ? `${imcMedio.toFixed(1)} kg/m²` : "—" },
+      { label: "Sobrepeso ou obesidade (OMS)", value: withImc.length ? `${Math.round((acimaDoPeso.length / withImc.length) * 100)}% (${acimaDoPeso.length}/${withImc.length})` : "—" },
+      { label: r !== null ? `Correlação IMC × escore (${correlationStrength(r)})` : "Correlação IMC × escore", value: r !== null ? `r = ${r.toFixed(2)}` : "—" },
+    ];
+
+    $("statGridImc").innerHTML = tiles.map((t) => `
+      <div class="stat-tile">
+        <div class="stat-label">${t.label}</div>
+        <div class="stat-value">${t.value}</div>
+      </div>
+    `).join("");
+  }
+
   function renderImc(t) {
     const withImc = data.filter((d) => notNull(d.imc));
     const ativos = withImc.filter((d) => d.classificacao === "Suficientemente Ativo");
@@ -307,11 +371,14 @@
     instances.push(renderIdade(t));
     instances.push(renderClassificacao(t));
     instances.push(renderEscoreTotal(t));
-    instances.push(renderCrossBar("chartTela", (d) => d.tela, ["<4h", "4-8h", ">8h"], t));
-    instances.push(renderCrossBar("chartSono", (d) => d.sono, ["<6h", "6-8h", ">8h"], t));
-    instances.push(renderCrossBar("chartModalidade", (d) => d.modalidade, ["Presencial", "EAD"], t));
-    instances.push(renderCrossBar("chartDeslocamento", (d) => d.deslocamento, ["Transporte coletivo", "Carro/Moto/Aplicativo", "A pé/Bicicleta"], t));
+    instances.push(renderCrossBar("chartTela", "insightTela", (d) => d.tela, ["<4h", "4-8h", ">8h"], t));
+    instances.push(renderCrossBar("chartSono", "insightSono", (d) => d.sono, ["<6h", "6-8h", ">8h"], t));
+    instances.push(renderCrossBar("chartOcupacao", "insightOcupacao", (d) => d.ocupacao, ["Não trabalha", "Meio período", "Tempo integral"], t));
+    instances.push(renderCrossBar("chartModalidade", "insightModalidade", (d) => d.modalidade, ["Presencial", "EAD"], t));
+    instances.push(renderCrossBar("chartDeslocamento", "insightDeslocamento", (d) => d.deslocamento, ["Transporte coletivo", "Carro/Moto/Aplicativo", "A pé/Bicicleta"], t));
+    instances.push(renderCrossBar("chartImcFaixa", "insightImcFaixa", (d) => d.imcCategoria, ["Abaixo do peso", "Peso normal", "Sobrepeso", "Obesidade"], t));
     instances.push(renderImc(t));
+    renderImcStats();
 
     renderDataTable();
   }

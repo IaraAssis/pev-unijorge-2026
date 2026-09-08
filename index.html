@@ -138,8 +138,10 @@
         <div class="section-num">04</div>
         <h2>Cruzamentos com hábitos de vida</h2>
         <p class="section-dek">
-          % de suficientemente ativos dentro de cada subgrupo — onde o sedentarismo
-          e outros hábitos parecem pesar mais.
+          Cada gráfico responde à mesma pergunta pra um hábito diferente: <em>dentro
+          desse grupo, qual a chance de ser suficientemente ativo?</em> A leitura
+          abaixo de cada um traduz isso em uma frase — pensando nas possíveis causas
+          comportamentais do sedentarismo, não só descrevendo os números.
         </p>
       </div>
 
@@ -147,18 +149,32 @@
         <div class="chart-card">
           <div class="chart-title">Tempo sentado/telas (dia típico)</div>
           <canvas id="chartTela" height="200"></canvas>
+          <p class="chart-sub insight" id="insightTela"></p>
         </div>
         <div class="chart-card">
           <div class="chart-title">Duração média de sono</div>
           <canvas id="chartSono" height="200"></canvas>
+          <p class="chart-sub insight" id="insightSono"></p>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Carga de trabalho (ocupação)</div>
+          <canvas id="chartOcupacao" height="200"></canvas>
+          <p class="chart-sub insight" id="insightOcupacao"></p>
         </div>
         <div class="chart-card">
           <div class="chart-title">Modalidade de ensino</div>
           <canvas id="chartModalidade" height="200"></canvas>
+          <p class="chart-sub insight" id="insightModalidade"></p>
         </div>
         <div class="chart-card">
           <div class="chart-title">Deslocamento até o campus</div>
           <canvas id="chartDeslocamento" height="200"></canvas>
+          <p class="chart-sub insight" id="insightDeslocamento"></p>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Faixa de IMC (classificação OMS)</div>
+          <canvas id="chartImcFaixa" height="200"></canvas>
+          <p class="chart-sub insight" id="insightImcFaixa"></p>
         </div>
       </div>
     </section>
@@ -167,8 +183,14 @@
       <div class="section-head">
         <div class="section-num">05</div>
         <h2>IMC × Escore de atividade física</h2>
-        <p class="section-dek">Índice de massa corporal (autorreportado) em função do escore total.</p>
+        <p class="section-dek">
+          Cada ponto é uma pessoa: posição no eixo X é o IMC autorreportado, no eixo Y
+          o escore total de atividade física. Referência OMS: <strong>abaixo de
+          18,5</strong> abaixo do peso · <strong>18,5–24,9</strong> peso normal ·
+          <strong>25–29,9</strong> sobrepeso · <strong>30 ou mais</strong> obesidade.
+        </p>
       </div>
+      <div class="stat-grid" id="statGridImc" style="margin-bottom: 16px;"></div>
       <div class="chart-card">
         <canvas id="chartImc" height="260"></canvas>
       </div>
@@ -227,7 +249,7 @@
     Trabalho acadêmico — Unijorge, Campus Paralela · dados coletados e analisados pelos alunos da disciplina.
   </footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.1/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
   <script src="js/data.js"></script>
   <script src="js/charts.js"></script>
 </body>

@@ -58,4 +58,10 @@ PEV_DATA.forEach((d) => {
   d.escoreTotal = d.escoreA + d.escoreB;
   d.classificacao = d.escoreTotal >= 4 ? "Suficientemente Ativo" : "Insuficientemente Ativo";
   d.imc = d.peso && d.altura ? +(d.peso / (d.altura * d.altura)).toFixed(1) : null;
+  // Faixas de IMC pela Organização Mundial da Saúde (adulto).
+  d.imcCategoria = d.imc == null ? null
+    : d.imc < 18.5 ? "Abaixo do peso"
+    : d.imc < 25 ? "Peso normal"
+    : d.imc < 30 ? "Sobrepeso"
+    : "Obesidade";
 });
