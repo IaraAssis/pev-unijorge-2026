@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nível de Atividade Física dos Estudantes da Unijorge — Campus Paralela</title>
+  <meta name="description" content="Levantamento do nível de atividade física e perfil epidemiológico dos estudantes universitários da Unijorge, campus Paralela — disciplina Atividade Física, Saúde e Qualidade de Vida." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="hero">
+    <div class="wrap">
+      <div class="eyebrow">Centro Universitário Jorge Amado — Unijorge · Campus Paralela</div>
+      <h1>Nível de Atividade Física e Perfil Epidemiológico dos Estudantes Universitários</h1>
+      <p class="lede">
+        Trabalho da disciplina <strong>Atividade Física, Saúde e Qualidade de Vida</strong>
+        (Prof. Robson) — Curso de Bacharelado em Educação Física. Coleta feita em campo
+        com o Questionário Simplificado de Atividades Físicas (Adrian Bauman), aplicado
+        a estudantes de diferentes cursos do campus.
+      </p>
+      <div class="meta-row">
+        <span class="meta-chip" id="chipN">amostra —</span>
+        <span class="meta-chip">coleta: agosto/setembro de 2026</span>
+        <span class="meta-chip">instrumento: questionário simplificado de Bauman (validado, uso em atenção básica)</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="toc">
+    <div class="wrap">
+      <a href="#metodologia">Metodologia</a>
+      <a href="#amostra">Amostra</a>
+      <a href="#resultado">Resultado geral</a>
+      <a href="#cruzamentos">Cruzamentos</a>
+      <a href="#imc">IMC × Escore</a>
+      <a href="#nahas">Recorte Nahas</a>
+      <a href="#limitacoes">Limitações</a>
+      <a href="#dados">Dados</a>
+      <a href="#referencias">Referências</a>
+    </div>
+  </nav>
+
+  <main class="wrap">
+
+    <section id="metodologia">
+      <div class="section-head">
+        <div class="section-num">01</div>
+        <h2>Metodologia</h2>
+        <p class="section-dek">Como os dados foram coletados e o que o escore significa.</p>
+      </div>
+      <p class="body-text">
+        Cada aluno da disciplina coletou fichas de colegas de outros cursos dentro do
+        campus, de forma anônima e voluntária (Termo de Consentimento impresso na
+        própria ficha). O instrumento principal é o <strong>Questionário Simplificado
+        de Atividades Físicas</strong>, desenvolvido e validado por Adrian Bauman
+        (Centre for Physical Activity and Health, University of Sydney) para uso em
+        centros de atenção básica à saúde. Ele soma dois escores:
+      </p>
+      <p class="body-text">
+        <strong>Escore A</strong> — frequência semanal de atividades físicas
+        <em>vigorosas</em> (0, 2 ou 4 pontos) e <strong>Escore B</strong> — frequência
+        de atividades <em>moderadas</em> (0, 1, 2 ou 4 pontos). A soma (0–8) classifica
+        o respondente como <strong>Suficientemente Ativo</strong> (escore ≥ 4) ou
+        <strong>Insuficientemente Ativo</strong> (escore 0–3). O referencial teórico
+        para a discussão dos resultados é o livro <em>Atividade Física, Saúde e
+        Qualidade de Vida</em>, de Markus Nahas.
+      </p>
+      <div class="callout">
+        <strong>Nota metodológica.</strong> Os dados vieram de fichas físicas
+        preenchidas à mão; peso e altura são autorreportados ("aproximados"), como o
+        próprio formulário pede, e alguns poucos campos (marcados na tabela de dados)
+        tinham caligrafia difícil de ler e foram transcritos com a melhor leitura
+        possível. Recomendamos conferir esses registros específicos contra a ficha
+        original antes da entrega final. Nomes e telefones dos respondentes não
+        entraram nesta base — apenas o código de coleta, para manter o anonimato
+        previsto no termo de consentimento.
+      </div>
+    </section>
+
+    <section id="amostra">
+      <div class="section-head">
+        <div class="section-num">02</div>
+        <h2>Perfil da amostra</h2>
+        <p class="section-dek">Quem respondeu: curso, sexo, modalidade e turno.</p>
+      </div>
+
+      <div class="stat-grid" id="statGridAmostra"></div>
+
+      <div class="chart-grid" style="margin-top: 24px;">
+        <div class="chart-card wide">
+          <div class="chart-title">Distribuição por curso de graduação</div>
+          <div class="chart-sub">Número de respondentes por curso (n = 24)</div>
+          <canvas id="chartCurso" height="220"></canvas>
+        </div>
+
+        <div class="chart-card">
+          <div class="demo-block" id="demoSexo"></div>
+          <div class="demo-block" id="demoModalidade"></div>
+          <div class="demo-block" id="demoTurno"></div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-title">Faixa etária</div>
+          <div class="chart-sub">Distribuição de idade dos respondentes</div>
+          <canvas id="chartIdade" height="200"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <section id="resultado">
+      <div class="section-head">
+        <div class="section-num">03</div>
+        <h2>Resultado geral</h2>
+        <p class="section-dek">Classificação final segundo o escore de Bauman.</p>
+      </div>
+
+      <div class="chart-grid">
+        <div class="chart-card">
+          <div class="chart-title">Classificação da amostra</div>
+          <div class="chart-sub">% suficientemente x insuficientemente ativos</div>
+          <canvas id="chartClassificacao" height="220"></canvas>
+          <p class="chart-sub" id="statActivePct" style="margin-top:10px; margin-bottom:0;"></p>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Distribuição do escore total (0–8)</div>
+          <div class="chart-sub">Escore A (vigorosa) + Escore B (moderada) · cor = classificação final</div>
+          <canvas id="chartEscoreGrid" height="220"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <section id="cruzamentos">
+      <div class="section-head">
+        <div class="section-num">04</div>
+        <h2>Cruzamentos com hábitos de vida</h2>
+        <p class="section-dek">
+          % de suficientemente ativos dentro de cada subgrupo — onde o sedentarismo
+          e outros hábitos parecem pesar mais.
+        </p>
+      </div>
+
+      <div class="chart-grid">
+        <div class="chart-card">
+          <div class="chart-title">Tempo sentado/telas (dia típico)</div>
+          <canvas id="chartTela" height="200"></canvas>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Duração média de sono</div>
+          <canvas id="chartSono" height="200"></canvas>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Modalidade de ensino</div>
+          <canvas id="chartModalidade" height="200"></canvas>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Deslocamento até o campus</div>
+          <canvas id="chartDeslocamento" height="200"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <section id="imc">
+      <div class="section-head">
+        <div class="section-num">05</div>
+        <h2>IMC × Escore de atividade física</h2>
+        <p class="section-dek">Índice de massa corporal (autorreportado) em função do escore total.</p>
+      </div>
+      <div class="chart-card">
+        <canvas id="chartImc" height="260"></canvas>
+      </div>
+    </section>
+
+    <section id="nahas">
+      <div class="section-head">
+        <div class="section-num">06</div>
+        <h2>Recorte complementar — Perfil do Estilo de Vida (Nahas)</h2>
+        <p class="section-dek">
+          3 fichas foram coletadas com o instrumento "Perfil do Estilo de Vida" de
+          Nahas (escala diferente, 5 componentes), não o questionário de Bauman.
+          Amostra pequena demais para gráfico — reportado à parte para não distorcer
+          os escores acima.
+        </p>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Curso</th><th>Idade</th><th>Escore A</th><th>Escore B</th><th>Total</th><th>Classificação (Bauman)</th></tr></thead>
+          <tbody id="tbodyNahas"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="limitacoes">
+      <div class="section-head">
+        <div class="section-num">07</div>
+        <h2>Limitações do estudo</h2>
+      </div>
+      <ul class="limit-list">
+        <li><strong>Amostra de conveniência</strong> (n = 24), não probabilística — os respondentes foram colegas encontrados pelos coletores dentro do campus, não uma amostra aleatória do corpo discente.</li>
+        <li><strong>Autorrelato</strong> — peso, altura e frequência de atividade física foram declarados pelo próprio respondente, sem aferição.</li>
+        <li><strong>Subgrupos pequenos</strong> — os cruzamentos (turno, deslocamento, curso) têm poucos casos por categoria, então as diferenças percentuais devem ser lidas como indício, não como conclusão estatística robusta.</li>
+        <li><strong>Concentração no turno noturno</strong> — a maior parte da coleta ocorreu com turmas noturnas, o que pode enviesar comparações por turno.</li>
+        <li><strong>Transcrição manual</strong> — os dados vieram de fichas em papel; alguns campos com caligrafia difícil foram sinalizados na tabela de dados brutos.</li>
+      </ul>
+    </section>
+
+    <section id="dados">
+      <div class="section-head">
+        <div class="section-num">08</div>
+        <h2>Dados brutos (anonimizados)</h2>
+        <p class="section-dek">Um registro por respondente, identificado só pelo código de coleta.</p>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th><th>Curso</th><th>Idade</th><th>Sexo</th><th>Modal.</th>
+              <th>Turno</th><th>IMC</th><th>Telas</th><th>Sono</th><th>Deslocamento</th>
+              <th>Escore</th><th>Classificação</th>
+            </tr>
+          </thead>
+          <tbody id="tbodyDados"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="referencias">
+      <div class="section-head">
+        <div class="section-num">09</div>
+        <h2>Referências</h2>
+      </div>
+      <ul class="ref-list">
+        <li>NAHAS, Markus V. <em>Atividade Física, Saúde e Qualidade de Vida: conceitos e sugestões para um estilo de vida ativo.</em></li>
+        <li>BAUMAN, Adrian. Questionário Simplificado de Atividades Físicas — Centre for Physical Activity and Health, School of Public Health, University of Sydney, Austrália.</li>
+        <li>Centro Universitário Jorge Amado (Unijorge) — Curso de Bacharelado em Educação Física, disciplina Atividade Física, Saúde e Qualidade de Vida.</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer>
+    Trabalho acadêmico — Unijorge, Campus Paralela · dados coletados e analisados pelos alunos da disciplina.
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.1/chart.umd.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/charts.js"></script>
+</body>
+</html>
