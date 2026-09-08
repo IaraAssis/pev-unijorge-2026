@@ -72,6 +72,7 @@
     `).join("");
 
     $("chipN").textContent = `amostra: n = ${n}`;
+    $("chartCursoSub").textContent = `Número de respondentes por curso (n = ${n})`;
   }
 
   function renderDemoBar(containerId, title, rows, keyFn, order, colors) {
@@ -269,23 +270,6 @@
   }
 
   // ============================================================
-  // Section 06 — Recorte Nahas
-  // ============================================================
-  function renderNahasTable() {
-    const rows = data.filter((d) => d.obs && d.obs.includes("Nahas"));
-    $("tbodyNahas").innerHTML = rows.map((d) => `
-      <tr>
-        <td>${d.curso || "—"}</td>
-        <td>${d.idade ?? "—"}</td>
-        <td>${d.escoreA}</td>
-        <td>${d.escoreB}</td>
-        <td>${d.escoreTotal}</td>
-        <td><span class="tag ${d.classificacao === "Suficientemente Ativo" ? "active" : "inactive"}">${d.classificacao}</span></td>
-      </tr>
-    `).join("");
-  }
-
-  // ============================================================
   // Section 08 — Dados brutos
   // ============================================================
   function renderDataTable() {
@@ -329,7 +313,6 @@
     instances.push(renderCrossBar("chartDeslocamento", (d) => d.deslocamento, ["Transporte coletivo", "Carro/Moto/Aplicativo", "A pé/Bicicleta"], t));
     instances.push(renderImc(t));
 
-    renderNahasTable();
     renderDataTable();
   }
 

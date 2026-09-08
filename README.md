@@ -3,10 +3,11 @@
 Trabalho da disciplina **Atividade Física, Saúde e Qualidade de Vida** (Prof. Robson),
 Curso de Bacharelado em Educação Física — Centro Universitário Jorge Amado (Unijorge).
 
-Site estático (sem build) que apresenta a análise de 24 fichas do **Questionário
+Site estático (sem build) que apresenta a análise de 21 fichas do **Questionário
 Simplificado de Atividades Físicas (Adrian Bauman)**, coletadas em campo por alunos da
-turma com colegas de outros cursos do campus, mais um recorte complementar de 3 fichas
-do instrumento "Perfil do Estilo de Vida" (Nahas).
+turma com colegas de outros cursos do campus. (3 fichas coletadas com um instrumento
+diferente — "Perfil do Estilo de Vida", de Nahas — ficaram fora da amostra por não
+seguirem o mesmo formulário.)
 
 **Página publicada:** _adicionar aqui a URL da Vercel depois do deploy_
 
@@ -40,13 +41,12 @@ Depois abra `http://localhost:8080` (ou a porta indicada).
   impresso na própria ficha garante anonimato, então só ficaram os dados
   sociodemográficos/comportamentais e um código de coleta (`id_coleta`).
 - Peso e altura são autorreportados ("aproximados"), como o próprio formulário pede.
-- **Dataset fechado: os 24 registros têm todos os campos analíticos preenchidos.**
-  Onde a ficha física tinha caligrafia difícil, campo em branco, ou veio do
-  formulário alternativo "Perfil do Estilo de Vida" (Nahas, sem essas perguntas —
-  `P13`–`P15`), o valor foi complementado depois diretamente com o respondente. O
-  campo `obs` de cada registro em `js/data.js`, quando presente, documenta essa
-  proveniência — nunca marca um valor em aberto.
-- A única lacuna que resta é o `id_coleta` de 2 registros (`P23`, `P24`): é um
+- **Dataset fechado: os 21 registros têm todos os campos analíticos preenchidos**,
+  todos vindos do mesmo instrumento (Bauman). Onde a ficha física tinha caligrafia
+  difícil ou campo em branco, o valor foi complementado depois diretamente com o
+  respondente. O campo `obs` de cada registro em `js/data.js`, quando presente,
+  documenta essa proveniência — nunca marca um valor em aberto.
+- A única lacuna que resta é o `id_coleta` de 2 registros (`P20`, `P21`): é um
   código interno de quem coletou a ficha, não algo que o próprio respondente saiba
   informar, e não entra em nenhuma análise ou gráfico.
 
