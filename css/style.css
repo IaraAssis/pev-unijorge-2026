@@ -136,6 +136,12 @@ nav.toc a {
 
 nav.toc a:hover { background: var(--surface-alt); color: var(--text-primary); }
 
+.toc-sep {
+  color: var(--border);
+  padding: 7px 4px;
+  align-self: center;
+}
+
 /* ---------- Sections ---------- */
 section {
   padding: 48px 0;
@@ -164,6 +170,34 @@ h2 {
   color: var(--text-secondary);
   max-width: 70ch;
   font-size: 15px;
+}
+
+/* ---------- Part divider (marks a new sample/dataset) ---------- */
+.part-divider {
+  padding: 56px 0 40px;
+  border-top: 4px solid var(--series-1);
+}
+
+.part-eyebrow {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--series-1);
+  font-weight: 700;
+}
+
+.part-title {
+  font-family: var(--serif);
+  font-size: clamp(24px, 3.4vw, 34px);
+  line-height: 1.2;
+  margin: 8px 0 12px;
+  max-width: 26ch;
+}
+
+.part-dek {
+  color: var(--text-secondary);
+  max-width: 72ch;
+  font-size: 15.5px;
 }
 
 p.body-text {
@@ -243,6 +277,14 @@ p.body-text {
 .chart-sub.insight strong { color: var(--text-primary); }
 
 .chart-card canvas { max-height: 300px; }
+
+.fixed-chart {
+  overflow-x: auto;
+}
+.fixed-chart canvas {
+  display: block;
+  max-width: none;
+}
 
 .legend-row {
   display: flex;
