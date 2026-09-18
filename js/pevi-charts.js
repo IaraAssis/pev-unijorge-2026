@@ -96,7 +96,7 @@
     const rows = [...counts.entries()].sort((a, b) => b[1] - a[1]);
 
     $("insightDominioFraco").textContent =
-      `"${rows[0][0]}" é o domínio mais baixo para ${rows[0][1]} de ${data.length} pessoas (${Math.round((rows[0][1] / data.length) * 100)}%) — o elo mais frequentemente mais fraco do grupo.`;
+      `Vemos que "${rows[0][0]}" é o ponto mais fraco pra ${Math.round((rows[0][1] / data.length) * 100)}% da turma — é o que mais aparece como o elo mais baixo do estilo de vida de cada um.`;
 
     const canvasFraco = $("chartDominioFraco");
     canvasFraco.getBoundingClientRect();
@@ -139,7 +139,7 @@
       { label: "Pessoas com AF isolada (gap ≥ 3)", value: `${isolados.length} de ${data.length}` },
       { label: "Insuficientemente ativas entre elas", value: `${pctIsoladosInativos}%` },
       { label: "Suficientemente ativos no geral", value: `${pctGeralAtivos}%` },
-      { label: "Correlação c/ Bauman: AF isolado vs Pentáculo inteiro", value: `r=${rAF.toFixed(2)} vs r=${rTotal.toFixed(2)}` },
+      { label: "O quanto cada um combina com o Bauman: só AF vs Pentáculo todo", value: `${rAF.toFixed(2)} vs ${rTotal.toFixed(2)}` },
     ];
 
     $("statGridAfIsolada").innerHTML = tiles.map((t) => `
@@ -172,7 +172,7 @@
     ];
 
     $("insightAfIsolada").textContent =
-      `Quando a Atividade Física fica isolada — o resto do estilo de vida bem avaliado "escondendo" um domínio de AF baixo — a chance de ser suficientemente ativo cai de ${grupos[1].pct}% pra ${grupos[0].pct}%. É exatamente o padrão descrito no livro: nutrição e prevenção altas não substituem exercício estruturado nem deslocamento ativo.`;
+      `Vemos que quando a Atividade Física fica isolada — o resto do estilo de vida bem avaliado "escondendo" esse ponto fraco — a chance de a pessoa se exercitar o suficiente despenca de ${grupos[1].pct}% pra só ${grupos[0].pct}%. Ou seja: comer bem e não fumar não substitui exercício de verdade nem ir a pé ou de bike pra faculdade.`;
 
     const canvasAfIsolada = $("chartAfIsolada");
     canvasAfIsolada.getBoundingClientRect();
@@ -206,7 +206,7 @@
     });
 
     $("insightAfFaixa").textContent =
-      `Relação direta: ${rows[0].pct}% suficientemente ativos na faixa baixa (n=${rows[0].n}), ${rows[1].pct}% na média (n=${rows[1].n}), ${rows[2].pct}% na alta (n=${rows[2].n}) — quanto maior o domínio de AF no Pentáculo, maior a chance de bater a frequência real que o Bauman mede.`;
+      `Vemos uma relação bem direta: só ${rows[0].pct}% de quem pontua baixo em Atividade Física no Pentáculo também é ativo pelo Bauman, contra ${rows[1].pct}% na faixa média e ${rows[2].pct}% na faixa alta. Quanto melhor a pessoa se avalia nesse domínio, maior a chance dela realmente se exercitar o suficiente.`;
 
     const canvasAfFaixa = $("chartAfFaixa");
     canvasAfFaixa.getBoundingClientRect();
@@ -235,12 +235,11 @@
     if (!isolados.length) { $("calloutExemplo").innerHTML = ""; return; }
     const exemplo = [...isolados].sort((a, b) => b.gapAF - a.gapAF)[0];
     $("calloutExemplo").innerHTML = `
-      <strong>Exemplo real da amostra (${exemplo.id}).</strong> Alimentação ${exemplo.nutricao}/9,
-      Comportamento Preventivo ${exemplo.comportamentoPreventivo}/9, Relacionamentos ${exemplo.relacionamentos}/9,
-      Controle do Estresse ${exemplo.controleEstresse}/9 — média de ${exemplo.mediaOutrosDominios}/9 nos outros 4
-      domínios. Mas Atividade Física: <strong>${exemplo.atividadeFisica}/9</strong>. Pelo escore de Bauman,
-      essa pessoa é <strong>${exemplo.classificacao}</strong>. O Pentáculo geral (${exemplo.pentaculoTotal}/45)
-      não parece ruim à primeira vista — só olhando domínio a domínio é que a Atividade Física isolada aparece.
+      <strong>Um exemplo real da turma (${exemplo.id}).</strong> Essa pessoa vai bem em quase tudo: come bem,
+      cuida da saúde, tem boas relações e controla o estresse — uma média de ${exemplo.mediaOutrosDominios}/9
+      nesses 4 domínios. Só que na Atividade Física ela tira <strong>${exemplo.atividadeFisica}/9</strong>. Pelo
+      escore de Bauman, essa pessoa é <strong>${exemplo.classificacao}</strong>. Olhando só o total do Pentáculo
+      (${exemplo.pentaculoTotal}/45) isso passaria batido — é abrindo domínio por domínio que o problema aparece.
     `;
   }
 

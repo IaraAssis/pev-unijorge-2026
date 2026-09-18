@@ -69,7 +69,3 @@ Depois abra `http://localhost:8080` (ou a porta indicada).
 2. Em [vercel.com/new](https://vercel.com/new), importe o repositório — não precisa
    configurar build command nem output directory (projeto estático puro).
 3. Cada push na branch principal gera um novo deploy automaticamente.
-
----
-
-🤖 Estrutura e análise inicial montadas com apoio do [Claude Code](https://claude.com/claude-code).

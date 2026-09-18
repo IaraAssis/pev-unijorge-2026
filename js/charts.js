@@ -236,26 +236,25 @@
   // ============================================================
   // Section 04 — Cruzamentos (% suficientemente ativo por subgrupo)
   // ============================================================
-  // Traduz a tabela de % por subgrupo numa frase de "probabilidade" —
-  // a leitura que uma plateia consegue captar de cabeça, com o n exposto
-  // pra não esconder que são amostras pequenas.
+  // Traduz a tabela de % por subgrupo numa frase corrida e simples de ler
+  // em voz alta na apresentação — sem "n=" nem jargão estatístico no meio
+  // da frase (o n já aparece no eixo do gráfico, pra quem quiser conferir).
   function describeCross(rows) {
-    if (rows.length === 0) return "Sem dados suficientes nesse grupo.";
+    if (rows.length === 0) return "Ainda não temos dado suficiente aqui.";
     // Prioriza comparar subgrupos com n >= 3 — um extremo de 100%/0% baseado
     // em 1 única pessoa não é uma leitura confiável pra apresentar como achado.
     const reliable = rows.filter((r) => r.n >= 3);
     const pool = reliable.length >= 2 ? reliable : rows;
     if (pool.length === 1) {
-      const r = pool[0];
-      return `${r.cat}: ${r.pct}% suficientemente ativos (n=${r.n}) — só um subgrupo com dado confiável, sem comparação possível.`;
+      return `Só temos um grupo com dado confiável aqui (${pool[0].cat}), então ainda não dá pra comparar.`;
     }
     const sorted = [...pool].sort((a, b) => b.pct - a.pct);
     const high = sorted[0];
     const low = sorted[sorted.length - 1];
     if (high.pct === low.pct) {
-      return `Nenhuma diferença relevante entre os grupos — todos em torno de ${high.pct}% suficientemente ativos.`;
+      return `Não vemos diferença entre os grupos aqui — todos ficam perto de ${high.pct}% de pessoas ativas.`;
     }
-    return `Maior chance: "${high.cat}" — ${high.pct}% suficientemente ativos (n=${high.n}). Menor chance: "${low.cat}" — ${low.pct}% (n=${low.n}).`;
+    return `Vemos que quem está no grupo "${low.cat}" é bem menos ativo — só ${low.pct}% se exercitam o suficiente — enquanto no grupo "${high.cat}" isso sobe pra ${high.pct}%.`;
   }
 
   function renderCrossBar(canvasId, insightId, keyFn, order, t) {
