@@ -92,7 +92,7 @@
       </div>
     `).join("");
 
-    $("chipN").textContent = `amostra: n = ${n}`;
+    $("chipN").textContent = `n = ${n}`;
     $("chartCursoSub").textContent = `Número de respondentes por curso (n = ${n})`;
   }
 

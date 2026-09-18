@@ -3,21 +3,28 @@
 Trabalho da disciplina **Atividade Física, Saúde e Qualidade de Vida** (Prof. Robson),
 Curso de Bacharelado em Educação Física — Centro Universitário Jorge Amado (Unijorge).
 
-Site estático (sem build) que apresenta a análise de 21 fichas do **Questionário
-Simplificado de Atividades Físicas (Adrian Bauman)**, coletadas em campo por alunos da
-turma com colegas de outros cursos do campus. (3 fichas coletadas com um instrumento
-diferente — "Perfil do Estilo de Vida", de Nahas — ficaram fora da amostra por não
-seguirem o mesmo formulário.)
+Site estático (sem build) com **duas coletas complementares**, feitas pela mesma turma
+mas em pessoas diferentes:
 
-**Página publicada:** _adicionar aqui a URL da Vercel depois do deploy_
+- **Parte 1 — PEV**: 21 fichas físicas do **Questionário Simplificado de Atividades
+  Físicas (Adrian Bauman)**, coletadas em campo. (3 fichas coletadas por engano com o
+  instrumento da Parte 2 ficaram fora desta amostra — ver "Sobre os dados".)
+- **Parte 2 — PEVI**: 39 respostas do **Perfil do Estilo de Vida / Pentáculo do
+  Bem-Estar (Markus Nahas)**, coletadas digitalmente via formulário por 13
+  entrevistadores (3 cada). Cruza os 5 domínios do Pentáculo com o mesmo escore de
+  Bauman, incluído no formulário.
+
+**Página publicada:** https://pev-unijorge-2026.vercel.app
 
 ## Estrutura
 
 ```
-index.html        # página única, todas as seções
-css/style.css      # estilo (tokens de cor claro/escuro automáticos)
-js/data.js          # dataset anonimizado (24 registros)
-js/charts.js        # lógica de agregação + renderização dos gráficos (Chart.js via CDN)
+index.html            # página única, todas as seções (Parte 1 + Parte 2)
+css/style.css          # estilo (tokens de cor claro/escuro automáticos)
+js/data.js              # dataset anonimizado da Parte 1 — PEV (21 registros)
+js/charts.js            # gráficos da Parte 1 (Chart.js via CDN)
+js/pevi-data.js          # dataset anonimizado da Parte 2 — PEVI (39 registros)
+js/pevi-charts.js        # gráficos da Parte 2
 ```
 
 Sem framework, sem etapa de build — é só HTML/CSS/JS servido como estático.
@@ -49,6 +56,12 @@ Depois abra `http://localhost:8080` (ou a porta indicada).
 - A única lacuna que resta é o `id_coleta` de 2 registros (`P20`, `P21`): é um
   código interno de quem coletou a ficha, não algo que o próprio respondente saiba
   informar, e não entra em nenhuma análise ou gráfico.
+- **Parte 2 (PEVI)**: mesma política de anonimização — nome e e-mail (que o Google
+  Forms registra por padrão) não entraram em `js/pevi-data.js`, só o código do
+  entrevistador (`idColeta`) e as respostas. Peso/altura/curso tiveram grafias
+  inconsistentes no formulário (vírgula vs. ponto decimal, "kg"/"m" no valor,
+  maiúsculas inconsistentes) — normalizados por código sem alterar o valor
+  numérico ou o curso informado.
 
 ## Deploy
 

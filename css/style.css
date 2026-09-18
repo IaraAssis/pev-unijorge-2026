@@ -142,6 +142,17 @@ nav.toc a:hover { background: var(--surface-alt); color: var(--text-primary); }
   align-self: center;
 }
 
+.toc-group {
+  align-self: center;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--series-1);
+  padding: 0 8px 0 2px;
+  white-space: nowrap;
+}
+
 /* ---------- Sections ---------- */
 section {
   padding: 48px 0;
@@ -170,6 +181,15 @@ h2 {
   color: var(--text-secondary);
   max-width: 70ch;
   font-size: 15px;
+}
+
+.part-tag {
+  margin-top: 32px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--series-1);
 }
 
 /* ---------- Part divider (marks a new sample/dataset) ---------- */
