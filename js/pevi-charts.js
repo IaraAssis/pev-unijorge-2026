@@ -168,6 +168,7 @@
       },
       options: {
         responsive: false,
+        maintainAspectRatio: false,
         cutout: "62%",
         plugins: { legend: { position: "bottom", labels: { color: t.inkSecondary, boxWidth: 10, boxHeight: 10, padding: 14, font: { size: 12.5 } } } },
       },
@@ -178,6 +179,15 @@
     const possible = [0, 1, 2, 3, 4, 5, 6, 7, 8];
     const counts = possible.map((v) => data.filter((d) => d.escoreTotal === v).length);
     const colors = possible.map((v) => (v >= 4 ? t.s1 : t.s2));
+
+    const insuf = data.filter((d) => d.escoreTotal < 4).length;
+    const suf = data.length - insuf;
+    $("statEscoreExplicacao").innerHTML =
+      `São só <strong>2 classificações</strong>, não 3: as barras laranja (escore 0 a 3) são os
+      <strong>${Math.round((insuf / data.length) * 100)}% insuficientemente ativos</strong> (${insuf} pessoas);
+      as roxas (escore 4 a 8) são os <strong>${Math.round((suf / data.length) * 100)}% suficientemente
+      ativos</strong> (${suf} pessoas).`;
+
     const canvas = $("chartEscoreGrid");
     canvas.getBoundingClientRect();
     return new Chart(canvas, {
@@ -189,6 +199,49 @@
         scales: {
           x: { title: { display: true, text: "Escore total (A + B)", color: t.muted, font: { size: 11.5 } }, grid: { display: false }, ticks: { color: t.inkSecondary } },
           y: { beginAtZero: true, ticks: { stepSize: 1, color: t.muted }, grid: { color: t.grid } },
+        },
+      },
+    });
+  }
+
+  // "Ativo pelo Bauman" e "sedentário" são eixos diferentes — dá pra fazer
+  // exercício vigoroso e ainda passar a maior parte do dia sentado. Aqui
+  // "sedentário" = 4h ou mais por dia sentado/telas (categorias "4-8h" e
+  // ">8h" do próprio formulário).
+  function renderAtivoSedentario(t) {
+    const sedentario = (d) => d.tela !== "<4h";
+    const grupos = [
+      { label: "Ativo, pouco sedentário", test: (d) => d.classificacao === "Suficientemente Ativo" && !sedentario(d), color: t.s1 },
+      { label: "Ativo, mas sedentário", test: (d) => d.classificacao === "Suficientemente Ativo" && sedentario(d), color: t.s1 },
+      { label: "Inativo, pouco sedentário", test: (d) => d.classificacao !== "Suficientemente Ativo" && !sedentario(d), color: t.s2 },
+      { label: "Inativo e sedentário", test: (d) => d.classificacao !== "Suficientemente Ativo" && sedentario(d), color: t.s2 },
+    ].map((g) => {
+      const n = data.filter(g.test).length;
+      return { ...g, n, pct: Math.round((n / data.length) * 100) };
+    });
+
+    const ativoSedentario = grupos[1];
+    $("insightAtivoSedentario").innerHTML =
+      `Vemos que <strong>${ativoSedentario.pct}% da turma</strong> (${ativoSedentario.n} de ${data.length}) se
+      exercita o suficiente pelo escore de Bauman <strong>mas ainda passa 4h ou mais por dia sentado/na
+      tela</strong> — o "ativo sedentário": faz exercício vigoroso ou moderado, porém o resto da rotina é parado.
+      Só ${grupos[0].pct}% conseguem as duas coisas (ativo e pouco tempo sentado). Ou seja, tirar uma boa nota no
+      escore de atividade física não garante uma rotina livre de sedentarismo.`;
+
+    const canvas = $("chartAtivoSedentario");
+    canvas.getBoundingClientRect();
+    return new Chart(canvas, {
+      type: "bar",
+      data: {
+        labels: grupos.map((g) => `${g.label} (n=${g.n})`),
+        datasets: [{ data: grupos.map((g) => g.pct), backgroundColor: grupos.map((g) => g.color), borderRadius: 4, maxBarThickness: 60 }],
+      },
+      options: {
+        responsive: false,
+        plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => `${c.parsed.y}% da amostra` } } },
+        scales: {
+          x: { grid: { display: false }, ticks: { color: t.inkSecondary, font: { size: 11.5 } } },
+          y: { beginAtZero: true, max: 100, ticks: { callback: (v) => v + "%", color: t.muted }, grid: { color: t.grid } },
         },
       },
     });
@@ -267,6 +320,23 @@
         <div class="stat-value">${t.value}</div>
       </div>
     `).join("");
+
+    const normal = data.filter((d) => d.imcCategoria === "Peso normal");
+    const sobrepeso = data.filter((d) => d.imcCategoria === "Sobrepeso");
+    const pctNormal = Math.round((normal.filter((d) => d.classificacao === "Suficientemente Ativo").length / normal.length) * 100);
+    const pctSobrepeso = Math.round((sobrepeso.filter((d) => d.classificacao === "Suficientemente Ativo").length / sobrepeso.length) * 100);
+
+    $("insightImcRelacao").innerHTML =
+      `Analisando IMC × escore de atividade física, vemos que <strong>praticamente não há relação entre os
+      dois</strong> nessa turma (r = ${r.toFixed(2)}, ${correlationStrength(r)}) — o peso corporal sozinho não
+      explica quem é ativo ou não. Um dado que chama atenção: quem está em "Sobrepeso" é <strong>ativo com mais
+      frequência (${pctSobrepeso}%, ${sobrepeso.filter((d) => d.classificacao === "Suficientemente Ativo").length}
+      de ${sobrepeso.length}) do que quem está em "Peso normal" (${pctNormal}%, ${normal.filter((d) => d.classificacao === "Suficientemente Ativo").length} de ${normal.length})</strong> — o oposto do que se
+      esperaria. Isso não quer dizer que sobrepeso "causa" mais atividade: são grupos pequenos (13 e 25 pessoas),
+      o IMC é autorreportado e não diferencia massa muscular de gordura — alguém que treina pesado pode ter IMC
+      mais alto sem estar "fora de forma". Com a correlação praticamente nula, o resultado mais seguro é: nessa
+      amostra, o peso não é um bom preditor de quem se exercita o suficiente.`;
+
     $("insightImc").textContent = describeImcSpread();
   }
 
@@ -499,6 +569,11 @@
     instances = [];
     const t = theme();
     Chart.defaults.font.family = getComputedStyle(document.body).fontFamily;
+    // Com 15+ gráficos na mesma página, a animação de entrada (~1s) de cada
+    // um deixa qualquer captura/leitura antes disso parecendo "quebrada"
+    // (barras/arcos ainda a meio caminho do valor final). Desativar deixa o
+    // resultado final visível na hora, sem esse efeito colateral.
+    Chart.defaults.animation = false;
 
     renderStatGridAmostra();
     instances.push(renderCursoChart(t));
@@ -509,6 +584,7 @@
 
     instances.push(renderClassificacao(t));
     instances.push(renderEscoreTotal(t));
+    instances.push(renderAtivoSedentario(t));
 
     instances.push(renderCrossBar("chartTela", "insightTela", (d) => d.tela, ["<4h", "4-8h", ">8h"], t));
     instances.push(renderCrossBar("chartSono", "insightSono", (d) => d.sono, ["<6h", "6-8h", ">8h"], t));

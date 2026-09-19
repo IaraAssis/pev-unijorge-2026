@@ -125,9 +125,24 @@
         </div>
         <div class="chart-card">
           <div class="chart-title">Distribuição do escore total (0–8)</div>
-          <div class="chart-sub">Escore A (vigorosa) + Escore B (moderada) · cor = classificação final</div>
+          <div class="chart-sub">Cada barra é quantas pessoas tiraram aquele escore (soma do Escore A + Escore B)</div>
           <div class="fixed-chart"><canvas id="chartEscoreGrid" width="440" height="280"></canvas></div>
+          <div class="legend-row">
+            <span class="legend-key"><span class="legend-dot" style="background:var(--series-2)"></span> Insuficientemente ativo (escore 0–3)</span>
+            <span class="legend-key"><span class="legend-dot" style="background:var(--series-1)"></span> Suficientemente ativo (escore 4–8)</span>
+          </div>
+          <p class="chart-sub" id="statEscoreExplicacao" style="margin-top:8px; margin-bottom:0;"></p>
         </div>
+      </div>
+
+      <div class="chart-card wide" style="margin-top: 16px;">
+        <div class="chart-title">Ativo pelo Bauman × tempo sentado/telas</div>
+        <div class="chart-sub">
+          São duas coisas diferentes: fazer exercício suficiente não significa passar o dia todo em pé —
+          dá pra ser "ativo" no escore e ainda ter um comportamento sedentário no resto do dia.
+        </div>
+        <div class="fixed-chart"><canvas id="chartAtivoSedentario" width="900" height="280"></canvas></div>
+        <p class="chart-sub insight" id="insightAtivoSedentario"></p>
       </div>
     </section>
 
@@ -189,6 +204,7 @@
         </p>
       </div>
       <div class="stat-grid" id="statGridImc" style="margin-bottom: 16px;"></div>
+      <div class="callout" id="insightImcRelacao"></div>
       <div class="chart-card">
         <div class="fixed-chart"><canvas id="chartImc" width="900" height="320"></canvas></div>
         <p class="chart-sub insight" id="insightImc"></p>
@@ -213,6 +229,17 @@
           <div class="fixed-chart"><canvas id="chartDominioFraco" width="460" height="300"></canvas></div>
           <p class="chart-sub insight" id="insightDominioFraco"></p>
         </div>
+      </div>
+
+      <div class="callout">
+        <strong>Por que a Alimentação pode ser o ponto mais fraco?</strong> Os dados não perguntam o motivo, mas
+        algumas hipóteses plausíveis pra explicar isso numa turma de universitários explicam o padrão: rotina
+        apertada entre aulas, estágio e trabalho deixa pouco tempo pra cozinhar ou fazer refeições completas;
+        muita gente mora longe da família ou sozinha e depende de comida pronta/delivery; opções rápidas e baratas
+        perto do campus tendem a ser mais calóricas e menos nutritivas do que uma refeição caseira; turno noturno
+        (maioria da turma) empurra o jantar pra tarde da noite, favorecendo lanches em vez de refeições
+        estruturadas; e orçamento de estudante costuma priorizar praticidade sobre qualidade nutricional. Vale a
+        turma comentar na apresentação qual desses motivos bate mais com a realidade de vocês.
       </div>
     </section>
 
