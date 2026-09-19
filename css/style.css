@@ -87,7 +87,7 @@ h1 {
 .lede {
   font-size: 17px;
   color: var(--text-secondary);
-  max-width: 62ch;
+  max-width: 95ch;
   margin: 0 0 20px;
 }
 
@@ -165,23 +165,6 @@ nav.toc a.active {
   background: var(--series-1-wash);
 }
 
-.toc-sep {
-  color: var(--border);
-  padding: 7px 4px;
-  align-self: center;
-}
-
-.toc-group {
-  align-self: center;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--series-1);
-  padding: 0 8px 0 2px;
-  white-space: nowrap;
-}
-
 /* ---------- Sections ---------- */
 section {
   padding: 48px 0;
@@ -208,49 +191,12 @@ h2 {
 
 .section-dek {
   color: var(--text-secondary);
-  max-width: 70ch;
+  max-width: 100ch;
   font-size: 15px;
 }
 
-.part-tag {
-  margin-top: 32px;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--series-1);
-}
-
-/* ---------- Part divider (marks a new sample/dataset) ---------- */
-.part-divider {
-  padding: 56px 0 40px;
-  border-top: 4px solid var(--series-1);
-}
-
-.part-eyebrow {
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--series-1);
-  font-weight: 700;
-}
-
-.part-title {
-  font-family: var(--serif);
-  font-size: clamp(24px, 3.4vw, 34px);
-  line-height: 1.2;
-  margin: 8px 0 12px;
-  max-width: 26ch;
-}
-
-.part-dek {
-  color: var(--text-secondary);
-  max-width: 72ch;
-  font-size: 15.5px;
-}
-
 p.body-text {
-  max-width: 72ch;
+  max-width: 100ch;
   color: var(--text-secondary);
   font-size: 15px;
 }
