@@ -1,19 +1,24 @@
 /**
- * PEVI — Perfil do Estilo de Vida (Pentáculo do Bem-Estar, Nahas) — Parte 2.
+ * PEV — Perfil do Estilo de Vida (Pentáculo do Bem-Estar, Nahas), coletado
+ * junto com o Questionário Simplificado de Atividades Físicas (Bauman) num
+ * único formulário digital. (Variável/arquivo mantém o nome histórico
+ * "pevi"/"PEVI_DATA" no código — só o texto da página usa o nome certo, PEV.)
  *
- * Amostra DIFERENTE das 21 fichas do levantamento principal (não é a mesma
- * gente, não deve ser somada com PEV_DATA). Coletada digitalmente via
- * formulário: 13 alunos da disciplina, cada um entrevistou 3 pessoas — 39
- * respostas no total. O formulário embute as mesmas 2 perguntas do
- * questionário simplificado de Bauman (escoreA/escoreB) e mais 15 perguntas
- * do Pentáculo do Bem-Estar (0 a 3 pontos cada), agrupadas em 5 domínios de
- * 3 perguntas cada (0-9 pontos por domínio):
+ * Base oficial do trabalho: 39 respostas coletadas digitalmente via
+ * formulário Google — 13 alunos da disciplina, cada um entrevistou 3
+ * pessoas. (As fichas físicas em papel coletadas antes deste formulário
+ * tinham inconsistências de preenchimento — caligrafia difícil, campos em
+ * branco — e foram descartadas da análise; só os dados do formulário digital
+ * entram aqui.)
+ *
+ * O formulário embute as mesmas 2 perguntas do Questionário Simplificado de
+ * Bauman (escoreA/escoreB) e mais 15 perguntas do PEV (0 a 3 pontos cada),
+ * agrupadas em 5 domínios de 3 perguntas cada (0-9 pontos por domínio):
  *
  *   Alimentação · Atividade Física · Comportamento Preventivo ·
  *   Relacionamentos · Controle do Estresse
  *
- * Nome/e-mail dos entrevistados não entraram aqui (mesma política de
- * anonimização do dataset principal) — só o ID do entrevistador
+ * Nome/e-mail dos entrevistados não entraram aqui — só o ID do entrevistador
  * (rastreável a quem coletou) e as respostas.
  */
 
@@ -71,6 +76,7 @@ PEVI_DATA.forEach((d) => {
   d.escoreTotal = d.escoreA + d.escoreB;
   d.classificacao = d.escoreTotal >= 4 ? "Suficientemente Ativo" : "Insuficientemente Ativo";
   d.imc = +(d.peso / (d.altura * d.altura)).toFixed(1);
+  d.imcCategoria = d.imc < 18.5 ? "Abaixo do peso" : d.imc < 25 ? "Peso normal" : d.imc < 30 ? "Sobrepeso" : "Obesidade";
   d.pentaculoTotal = PEVI_DOMINIOS.reduce((s, dom) => s + d[dom.key], 0);
 
   // Domínio mais comprometido (menor pontuação; empate resolvido pela
