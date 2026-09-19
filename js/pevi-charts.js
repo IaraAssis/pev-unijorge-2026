@@ -183,10 +183,9 @@
     const insuf = data.filter((d) => d.escoreTotal < 4).length;
     const suf = data.length - insuf;
     $("statEscoreExplicacao").innerHTML =
-      `São só <strong>2 classificações</strong>, não 3: as barras laranja (escore 0 a 3) são os
-      <strong>${Math.round((insuf / data.length) * 100)}% insuficientemente ativos</strong> (${insuf} pessoas);
-      as roxas (escore 4 a 8) são os <strong>${Math.round((suf / data.length) * 100)}% suficientemente
-      ativos</strong> (${suf} pessoas).`;
+      `A pesquisa mostra que <strong>${Math.round((insuf / data.length) * 100)}% estão insuficientemente
+      ativos</strong> (${insuf} pessoas) e <strong>${Math.round((suf / data.length) * 100)}% estão
+      suficientemente ativos</strong> (${suf} pessoas).`;
 
     const canvas = $("chartEscoreGrid");
     canvas.getBoundingClientRect();
