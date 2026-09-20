@@ -14,7 +14,7 @@
     const max = doc.scrollHeight - doc.clientHeight;
     progress.style.width = max > 0 ? `${Math.min(100, (y / max) * 100)}%` : "0%";
 
-    // Esconde o menu ao rolar pra baixo, mostra ao rolar pra cima —
+    // Esconde o menu ao rolar pra baixo, mostra ao rolar pra cima:
     // fica fora do caminho enquanto lê, mas nunca some de vez.
     if (y > lastY + 4 && y > 120) {
       nav.classList.add("nav-hidden");

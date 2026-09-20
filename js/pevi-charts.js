@@ -203,7 +203,7 @@
     });
   }
 
-  // "Ativo pelo Bauman" e "sedentário" são eixos diferentes — dá pra fazer
+  // "Ativo pelo Bauman" e "sedentário" são eixos diferentes: dá pra fazer
   // exercício vigoroso e ainda passar a maior parte do dia sentado. Aqui
   // "sedentário" = 4h ou mais por dia sentado/telas (categorias "4-8h" e
   // ">8h" do próprio formulário).
@@ -223,7 +223,7 @@
     $("insightAtivoSedentario").innerHTML =
       `Vemos que <strong>${ativoSedentario.pct}% da turma</strong> (${ativoSedentario.n} de ${data.length}) se
       exercita o suficiente pelo escore de Bauman <strong>mas ainda passa 4h ou mais por dia sentado/na
-      tela</strong> — o "ativo sedentário": faz exercício vigoroso ou moderado, porém o resto da rotina é parado.
+      tela</strong>, o "ativo sedentário": faz exercício vigoroso ou moderado, porém o resto da rotina é parado.
       Só ${grupos[0].pct}% conseguem as duas coisas (ativo e pouco tempo sentado). Ou seja, tirar uma boa nota no
       escore de atividade física não garante uma rotina livre de sedentarismo.`;
 
@@ -247,7 +247,7 @@
   }
 
   // ============================================================
-  // Cruzamentos — frases simples, sem jargão no meio do texto
+  // Cruzamentos: frases simples, sem jargão no meio do texto
   // ============================================================
   function describeCross(rows) {
     if (rows.length === 0) return "Ainda não temos dado suficiente aqui.";
@@ -260,9 +260,9 @@
     const high = sorted[0];
     const low = sorted[sorted.length - 1];
     if (high.pct === low.pct) {
-      return `Não vemos diferença entre os grupos aqui — todos ficam perto de ${high.pct}% de pessoas ativas.`;
+      return `Não vemos diferença entre os grupos aqui, todos ficam perto de ${high.pct}% de pessoas ativas.`;
     }
-    return `Vemos que quem está no grupo "${low.cat}" é bem menos ativo — só ${low.pct}% se exercitam o suficiente — enquanto no grupo "${high.cat}" isso sobe pra ${high.pct}%.`;
+    return `Vemos que quem está no grupo "${low.cat}" é bem menos ativo (só ${low.pct}% se exercitam o suficiente), enquanto no grupo "${high.cat}" isso sobe pra ${high.pct}%.`;
   }
 
   function renderCrossBar(canvasId, insightId, keyFn, order, t) {
@@ -301,7 +301,7 @@
     if (maxGap < 3 || isolados > 3) return "";
     const clusterMax = sorted[gapIndex - 1];
     const valores = sorted.slice(gapIndex).map((v) => v.toFixed(1)).join(", ");
-    return `${gapIndex} de ${sorted.length} registros têm IMC até ${clusterMax.toFixed(1)} kg/m² — ${isolados === 1 ? `o ponto isolado (${valores})` : `os pontos isolados (${valores})`} ${isolados === 1 ? "puxa" : "puxam"} o eixo pra direita, então a nuvem de pontos parece mais concentrada na metade esquerda do gráfico.`;
+    return `${gapIndex} de ${sorted.length} registros têm IMC até ${clusterMax.toFixed(1)} kg/m², e ${isolados === 1 ? `o ponto isolado (${valores})` : `os pontos isolados (${valores})`} ${isolados === 1 ? "puxa" : "puxam"} o eixo pra direita, então a nuvem de pontos parece mais concentrada na metade esquerda do gráfico.`;
   }
 
   function renderImcStats() {
@@ -327,12 +327,12 @@
 
     $("insightImcRelacao").innerHTML =
       `Analisando IMC × escore de atividade física, vemos que <strong>praticamente não há relação entre os
-      dois</strong> nessa turma (r = ${r.toFixed(2)}, ${correlationStrength(r)}) — o peso corporal sozinho não
+      dois</strong> nessa turma (r = ${r.toFixed(2)}, ${correlationStrength(r)}), o peso corporal sozinho não
       explica quem é ativo ou não. Um dado que chama atenção: quem está em "Sobrepeso" é <strong>ativo com mais
       frequência (${pctSobrepeso}%, ${sobrepeso.filter((d) => d.classificacao === "Suficientemente Ativo").length}
-      de ${sobrepeso.length}) do que quem está em "Peso normal" (${pctNormal}%, ${normal.filter((d) => d.classificacao === "Suficientemente Ativo").length} de ${normal.length})</strong> — o oposto do que se
+      de ${sobrepeso.length}) do que quem está em "Peso normal" (${pctNormal}%, ${normal.filter((d) => d.classificacao === "Suficientemente Ativo").length} de ${normal.length})</strong>, o oposto do que se
       esperaria. Isso não quer dizer que sobrepeso "causa" mais atividade: são grupos pequenos (13 e 25 pessoas),
-      o IMC é autorreportado e não diferencia massa muscular de gordura — alguém que treina pesado pode ter IMC
+      o IMC é autorreportado e não diferencia massa muscular de gordura; alguém que treina pesado pode ter IMC
       mais alto sem estar "fora de forma". Com a correlação praticamente nula, o resultado mais seguro é: nessa
       amostra, o peso não é um bom preditor de quem se exercita o suficiente.`;
 
@@ -403,7 +403,7 @@
     data.forEach((d) => counts.set(d.dominioMaisFraco, (counts.get(d.dominioMaisFraco) || 0) + 1));
     const rows = [...counts.entries()].sort((a, b) => b[1] - a[1]);
     $("insightDominioFraco").textContent =
-      `Vemos que "${rows[0][0]}" é o ponto mais fraco pra ${Math.round((rows[0][1] / data.length) * 100)}% da turma — é o que mais aparece como o elo mais baixo do estilo de vida de cada um.`;
+      `Vemos que "${rows[0][0]}" é o ponto mais fraco pra ${Math.round((rows[0][1] / data.length) * 100)}% da turma, o que mais aparece como o elo mais baixo do estilo de vida de cada um.`;
     const canvas = $("chartDominioFraco");
     canvas.getBoundingClientRect();
     return new Chart(canvas, {
@@ -425,7 +425,7 @@
   }
 
   // ============================================================
-  // AF isolada — o núcleo da análise
+  // AF isolada: o núcleo da análise
   // ============================================================
   const GAP_LIMIAR = 3;
 
@@ -459,7 +459,7 @@
       { label: `Resto da amostra (n=${resto.length})`, pct: pct(resto) },
     ];
     $("insightAfIsolada").textContent =
-      `Vemos que quando a Atividade Física fica isolada — o resto do estilo de vida bem avaliado "escondendo" esse ponto fraco — a chance de a pessoa se exercitar o suficiente despenca de ${grupos[1].pct}% pra só ${grupos[0].pct}%. Ou seja: comer bem e não fumar não substitui exercício de verdade nem ir a pé ou de bike pra faculdade.`;
+      `Vemos que quando a Atividade Física fica isolada (o resto do estilo de vida bem avaliado "escondendo" esse ponto fraco), a chance de a pessoa se exercitar o suficiente despenca de ${grupos[1].pct}% pra só ${grupos[0].pct}%. Ou seja: comer bem e não fumar não substitui exercício de verdade nem ir a pé ou de bike pra faculdade.`;
     const canvas = $("chartAfIsolada");
     canvas.getBoundingClientRect();
     return new Chart(canvas, {
@@ -508,10 +508,10 @@
     const exemplo = [...isolados].sort((a, b) => b.gapAF - a.gapAF)[0];
     $("calloutExemplo").innerHTML = `
       <strong>Um exemplo real da turma (${exemplo.id}).</strong> Essa pessoa vai bem em quase tudo: come bem,
-      cuida da saúde, tem boas relações e controla o estresse — uma média de ${exemplo.mediaOutrosDominios}/9
+      cuida da saúde, tem boas relações e controla o estresse: uma média de ${exemplo.mediaOutrosDominios}/9
       nesses 4 domínios. Só que na Atividade Física ela tira <strong>${exemplo.atividadeFisica}/9</strong>. Pelo
       escore de Bauman, essa pessoa é <strong>${exemplo.classificacao}</strong>. Olhando só o total do Pentáculo
-      (${exemplo.pentaculoTotal}/45) isso passaria batido — é abrindo domínio por domínio que o problema aparece.
+      (${exemplo.pentaculoTotal}/45) isso passaria batido, é abrindo domínio por domínio que o problema aparece.
     `;
   }
 

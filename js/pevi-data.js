@@ -1,14 +1,14 @@
 /**
- * PEV — Perfil do Estilo de Vida (Pentáculo do Bem-Estar, Nahas), coletado
+ * PEV: Perfil do Estilo de Vida (Pentáculo do Bem-Estar, Nahas), coletado
  * junto com o Questionário Simplificado de Atividades Físicas (Bauman) num
  * único formulário digital. (Variável/arquivo mantém o nome histórico
- * "pevi"/"PEVI_DATA" no código — só o texto da página usa o nome certo, PEV.)
+ * "pevi"/"PEVI_DATA" no código; só o texto da página usa o nome certo, PEV.)
  *
  * Base oficial do trabalho: 39 respostas coletadas digitalmente via
- * formulário Google — 13 alunos da disciplina, cada um entrevistou 3
+ * formulário Google, 13 alunos da disciplina, cada um entrevistou 3
  * pessoas. (As fichas físicas em papel coletadas antes deste formulário
- * tinham inconsistências de preenchimento — caligrafia difícil, campos em
- * branco — e foram descartadas da análise; só os dados do formulário digital
+ * tinham inconsistências de preenchimento, caligrafia difícil, campos em
+ * branco, e foram descartadas da análise; só os dados do formulário digital
  * entram aqui.)
  *
  * O formulário embute as mesmas 2 perguntas do Questionário Simplificado de
@@ -18,7 +18,7 @@
  *   Alimentação · Atividade Física · Comportamento Preventivo ·
  *   Relacionamentos · Controle do Estresse
  *
- * Nome/e-mail dos entrevistados não entraram aqui — só o ID do entrevistador
+ * Nome/e-mail dos entrevistados não entraram aqui: só o ID do entrevistador
  * (rastreável a quem coletou) e as respostas.
  */
 
@@ -84,8 +84,8 @@ PEVI_DATA.forEach((d) => {
   d.dominioMaisFraco = PEVI_DOMINIOS.reduce((min, dom) => (d[dom.key] < d[min.key] ? dom : min)).label;
 
   // "AF isolada": o domínio de Atividade Física fica abaixo da média dos
-  // outros 4 — o resto do estilo de vida "compensa" um AF baixo, que só
-  // aparece isolado quando se olha domínio a domínio.
+  // outros 4 (o resto do estilo de vida "compensa" um AF baixo, que só
+  // aparece isolado quando se olha domínio a domínio).
   const outros = PEVI_DOMINIOS.filter((dom) => dom.key !== "atividadeFisica");
   d.mediaOutrosDominios = +(outros.reduce((s, dom) => s + d[dom.key], 0) / outros.length).toFixed(2);
   d.gapAF = +(d.mediaOutrosDominios - d.atividadeFisica).toFixed(2);
