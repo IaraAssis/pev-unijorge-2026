@@ -47,6 +47,10 @@
 
 * { box-sizing: border-box; }
 
+html, body {
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
   background: var(--page);
@@ -233,7 +237,7 @@ p.body-text {
 /* ---------- Chart cards ---------- */
 .chart-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(440px, 100%), 1fr));
   gap: 16px;
   margin-top: 8px;
 }
@@ -243,6 +247,7 @@ p.body-text {
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 18px 20px 12px;
+  min-width: 0;
 }
 
 .chart-card.wide { grid-column: 1 / -1; }
@@ -409,6 +414,18 @@ footer {
 }
 
 @media (max-width: 640px) {
+  .wrap { padding: 0 16px; }
   header.hero { padding: 40px 0 28px; }
   section { padding: 36px 0; }
+  .chart-card { padding: 16px 14px 10px; }
+
+  .fixed-chart { overflow-x: visible; }
+  .fixed-chart canvas {
+    max-width: 100%;
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  table { font-size: 12px; }
+  thead th, tbody td { padding: 7px 9px; }
 }
