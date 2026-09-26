@@ -131,11 +131,7 @@ nav.toc {
   background: color-mix(in srgb, var(--surface) 88%, transparent);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
-  transition: transform 0.28s ease, box-shadow 0.28s ease;
-}
-
-nav.toc.nav-hidden {
-  transform: translateY(-100%);
+  transition: box-shadow 0.28s ease;
 }
 
 nav.toc.nav-elevated {
