@@ -1,6 +1,6 @@
 # PEV: Perfil do Estilo de Vida, Estudantes Unijorge (Campus Paralela)
 
-Trabalho da disciplina **Atividade Física, Saúde e Qualidade de Vida** (Prof. Robson),
+Trabalho da disciplina **Atividade Física, Saúde e Qualidade de Vida** (Prof. Robson Santana),
 Curso de Bacharelado em Educação Física, Centro Universitário Jorge Amado (Unijorge).
 
 Site estático (sem build) com a análise de **39 respostas** de um formulário digital
