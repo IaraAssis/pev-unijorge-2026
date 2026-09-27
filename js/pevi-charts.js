@@ -591,6 +591,7 @@
     instances.push(renderCrossBar("chartModalidade", "insightModalidade", (d) => d.modalidade, ["Presencial", "EAD"], t));
     instances.push(renderCrossBar("chartDeslocamento", "insightDeslocamento", (d) => d.deslocamento, ["Transporte coletivo", "Carro/Moto/Aplicativo", "A pé/Bicicleta"], t));
     instances.push(renderCrossBar("chartImcFaixa", "insightImcFaixa", (d) => d.imcCategoria, ["Abaixo do peso", "Peso normal", "Sobrepeso", "Obesidade"], t));
+    instances.push(renderCrossBar("chartSexo", "insightSexo", (d) => d.sexo, ["Feminino", "Masculino"], t));
 
     renderImcStats();
     instances.push(renderImc(t));
