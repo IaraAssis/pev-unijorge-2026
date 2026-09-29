@@ -511,13 +511,22 @@
     canvas.getBoundingClientRect();
     return new Chart(canvas, {
       type: "bar",
-      data: { labels: rows.map((r) => `${r.cat} (n=${r.n})`), datasets: [{ data: rows.map((r) => r.pct), backgroundColor: t.s1, borderRadius: 4, maxBarThickness: 46 }] },
+      data: {
+        labels: rows.map((r) => `${r.cat} (n=${r.n})`),
+        datasets: [
+          { label: "Suficientemente ativo", data: rows.map((r) => r.pct), backgroundColor: t.s1, stack: "pct", maxBarThickness: 46 },
+          { label: "Insuficientemente ativo", data: rows.map((r) => 100 - r.pct), backgroundColor: t.s2, stack: "pct", maxBarThickness: 46 },
+        ],
+      },
       options: {
         responsive: false,
-        plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => `${c.parsed.y}% suficientemente ativos` } } },
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: (c) => `${c.parsed.y}% ${c.dataset.label.toLowerCase()}` } },
+        },
         scales: {
-          x: { grid: { display: false }, ticks: { color: t.inkSecondary, font: { size: 11 } } },
-          y: { beginAtZero: true, max: 100, ticks: { callback: (v) => v + "%", color: t.muted }, grid: { color: t.grid } },
+          x: { stacked: true, grid: { display: false }, ticks: { color: t.inkSecondary, font: { size: 11 } } },
+          y: { stacked: true, beginAtZero: true, max: 100, ticks: { callback: (v) => v + "%", color: t.muted }, grid: { color: t.grid } },
         },
       },
     });
