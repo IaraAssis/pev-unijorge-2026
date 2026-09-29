@@ -375,8 +375,23 @@
   // ============================================================
   // Pentáculo do Bem-Estar
   // ============================================================
+  // Classificação do próprio livro do Nahas: até 1/3 do máximo é perfil
+  // negativo, até 2/3 é intermediário (pode melhorar), acima disso é
+  // perfil positivo. Vale tanto pra um domínio (0-9) quanto pro Pentáculo
+  // inteiro (0-45).
+  function classifyPev(valor, max) {
+    if (valor <= max / 3) return "perfil negativo";
+    if (valor <= (max * 2) / 3) return "intermediário (pode melhorar)";
+    return "perfil positivo";
+  }
+
   function renderPentaculoRadar(t) {
     const medias = dominios.map((dom) => mean(data.map((d) => d[dom.key])));
+    const todasIntermediarias = medias.every((m) => classifyPev(m, 9) === "intermediário (pode melhorar)");
+    $("insightPentaculoRadar").innerHTML =
+      `O livro classifica cada domínio (0–9) em 3 faixas: até 3 é <strong>perfil negativo</strong>, de 4 a 6 é
+      <strong>intermediário</strong>, de 7 a 9 é <strong>perfil positivo</strong>. Nessa turma, ${todasIntermediarias ? "todos os 5 domínios caem na faixa intermediária" : "a maioria dos domínios cai na faixa intermediária"}
+      (entre ${Math.min(...medias).toFixed(1)} e ${Math.max(...medias).toFixed(1)} de 9), nenhum chega ao perfil positivo.`;
     const canvas = $("chartPentaculoRadar");
     canvas.getBoundingClientRect();
     return new Chart(canvas, {
