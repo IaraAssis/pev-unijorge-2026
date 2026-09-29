@@ -506,7 +506,7 @@
       return { cat, n: subset.length, pct: subset.length ? Math.round((ativos / subset.length) * 100) : 0 };
     });
     $("insightAfFaixa").textContent =
-      `Vemos uma relação bem direta: só ${rows[0].pct}% de quem pontua baixo em Atividade Física no Pentáculo também é ativo pelo Bauman, contra ${rows[1].pct}% na faixa média e ${rows[2].pct}% na faixa alta. Quanto melhor a pessoa se avalia nesse domínio, maior a chance dela realmente se exercitar o suficiente.`;
+      `Quem se avalia bem no domínio de Atividade Física do PEV também costuma se exercitar de verdade: ${rows[2].pct}% de quem tira nota alta (7-9) é suficientemente ativo pelo Bauman, contra ${rows[1].pct}% na nota média (4-6) e só ${rows[0].pct}% na nota baixa (0-3). As duas perguntas, mesmo sendo diferentes, apontam pra mesma pessoa na maioria dos casos.`;
     const canvas = $("chartAfFaixa");
     canvas.getBoundingClientRect();
     return new Chart(canvas, {
