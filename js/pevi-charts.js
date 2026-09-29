@@ -485,13 +485,22 @@
     canvas.getBoundingClientRect();
     return new Chart(canvas, {
       type: "bar",
-      data: { labels: grupos.map((g) => g.label), datasets: [{ data: grupos.map((g) => g.pct), backgroundColor: [t.s2, t.s1], borderRadius: 4, maxBarThickness: 46 }] },
+      data: {
+        labels: grupos.map((g) => g.label),
+        datasets: [
+          { label: "Suficientemente ativo", data: grupos.map((g) => g.pct), backgroundColor: t.s1, stack: "pct", maxBarThickness: 46 },
+          { label: "Insuficientemente ativo", data: grupos.map((g) => 100 - g.pct), backgroundColor: t.s2, stack: "pct", maxBarThickness: 46 },
+        ],
+      },
       options: {
         responsive: false,
-        plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => `${c.parsed.y}% suficientemente ativos` } } },
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: (c) => `${c.parsed.y}% ${c.dataset.label.toLowerCase()}` } },
+        },
         scales: {
-          x: { grid: { display: false }, ticks: { color: t.inkSecondary, font: { size: 11.5 } } },
-          y: { beginAtZero: true, max: 100, ticks: { callback: (v) => v + "%", color: t.muted }, grid: { color: t.grid } },
+          x: { stacked: true, grid: { display: false }, ticks: { color: t.inkSecondary, font: { size: 11.5 } } },
+          y: { stacked: true, beginAtZero: true, max: 100, ticks: { callback: (v) => v + "%", color: t.muted }, grid: { color: t.grid } },
         },
       },
     });
